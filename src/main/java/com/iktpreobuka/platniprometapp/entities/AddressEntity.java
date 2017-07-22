@@ -11,7 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 @Entity
@@ -23,9 +23,13 @@ public class AddressEntity {
 	private String city;
 	private String country;
 	private Integer version;
-	@JsonIgnore
 	@OneToMany(mappedBy = "address", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	private List<ClientEntity> clients = new ArrayList<>();
+	@OneToMany(mappedBy = "address", 
+			cascade = CascadeType.REFRESH, 
+			fetch = FetchType.LAZY)
+	@JsonBackReference
+	private List<BankEntity> bankaddresses;
 	
 	
 	public AddressEntity() {
@@ -60,6 +64,18 @@ public class AddressEntity {
 	}
 	public void setVersion(Integer version) {
 		this.version = version;
+	}
+	public List<ClientEntity> getClients() {
+		return clients;
+	}
+	public void setClients(List<ClientEntity> clients) {
+		this.clients = clients;
+	}
+	public List<BankEntity> getBankaddresses() {
+		return bankaddresses;
+	}
+	public void setBankaddresses(List<BankEntity> bankaddresses) {
+		this.bankaddresses = bankaddresses;
 	}
 	
 

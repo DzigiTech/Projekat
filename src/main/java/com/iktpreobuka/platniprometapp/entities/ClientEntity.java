@@ -1,13 +1,18 @@
 package com.iktpreobuka.platniprometapp.entities;
 
 
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 
 @Entity
@@ -24,6 +29,12 @@ public class ClientEntity {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "address")
 	private AddressEntity address;
+	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JoinTable(name = "banks")
+	private List<BankEntity> banks;
+	@OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH, 
+			fetch = FetchType.LAZY)
+	private List<AccountEntity> clientaccounts;
 	
 	public ClientEntity() {
 		super();
