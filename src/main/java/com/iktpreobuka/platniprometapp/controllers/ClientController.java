@@ -23,6 +23,7 @@ public class ClientController {
 	private ClientRepository clientRepository;
 	@Autowired
 	private AddressRepository addressRepository;
+	
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ClientEntity saveClient(@RequestParam String name, 

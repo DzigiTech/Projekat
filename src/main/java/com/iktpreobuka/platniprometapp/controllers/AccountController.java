@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.platniprometapp.entities.AccountEntity;
+import com.iktpreobuka.platniprometapp.entities.BankEntity;
+import com.iktpreobuka.platniprometapp.entities.ClientEntity;
 import com.iktpreobuka.platniprometapp.repositories.AccountRepository;
+import com.iktpreobuka.platniprometapp.repositories.BankRepository;
+import com.iktpreobuka.platniprometapp.repositories.ClientRepository;
 
 
 @RestController
@@ -18,11 +22,15 @@ import com.iktpreobuka.platniprometapp.repositories.AccountRepository;
 public class AccountController {
 	
 	@Autowired
-	public AccountRepository accountRepository;
+	private AccountRepository accountRepository;
+	@Autowired
+	private ClientRepository clientRepository;
+	@Autowired
+	private BankRepository bankRepository;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public AccountEntity saveAccount(@RequestParam String type, 
-			@RequestParam String number, @RequestParam String state){
+			@RequestParam String number, @RequestParam double state){
 		AccountEntity account = new AccountEntity();
 		account.setType(type);
 		account.setNumber(number);
@@ -52,7 +60,7 @@ public class AccountController {
 	}
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
 	public AccountEntity updateAccount(@PathVariable Integer id, @RequestParam String type, 
-			@RequestParam String number, @RequestParam String state){
+			@RequestParam String number, @RequestParam double state){
 		AccountEntity account = accountRepository.findOne(id);
 		if(type != null){
 			account.setType(type);
@@ -60,9 +68,25 @@ public class AccountController {
 		if(number != null){
 			account.setNumber(number);
 		}
-		if(state != null){
+		if(state != 0){
 			account.setState(state);
 		}
+		accountRepository.save(account);
+		return account;
+	}
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/client")
+	public AccountEntity assignClientToAccount(@PathVariable Integer id, @RequestParam Integer clientId){
+		AccountEntity account = accountRepository.findOne(id);
+		ClientEntity client = clientRepository.findOne(clientId);
+		account.setClient(client);
+		accountRepository.save(account);
+		return account;
+	}
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/bank")
+	public AccountEntity assignBankToAccount(@PathVariable Integer id, @RequestParam Integer bankId){
+		AccountEntity account = accountRepository.findOne(id);
+		BankEntity bank = bankRepository.findOne(bankId);
+		account.setBank(bank);
 		accountRepository.save(account);
 		return account;
 	}

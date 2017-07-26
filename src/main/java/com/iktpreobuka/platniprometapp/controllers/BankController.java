@@ -1,5 +1,6 @@
 package com.iktpreobuka.platniprometapp.controllers;
 
+import java.util.ArrayList;
 /*import java.util.ArrayList;*/
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.platniprometapp.entities.AddressEntity;
 import com.iktpreobuka.platniprometapp.entities.BankEntity;
+import com.iktpreobuka.platniprometapp.entities.ClientEntity;
 /*import com.iktpreobuka.platniprometapp.entities.ClientEntity;*/
 import com.iktpreobuka.platniprometapp.repositories.AddressRepository;
 import com.iktpreobuka.platniprometapp.repositories.BankRepository;
@@ -74,7 +76,7 @@ public class BankController {
 		bankRepository.save(bank);
 		return bank;
 	}
-	/*@RequestMapping(method = RequestMethod.PUT, value = "/{id}/client")
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/client")
 	public BankEntity assignClientToBank(@PathVariable Integer id, @RequestParam Integer clientId){
 		BankEntity bank = bankRepository.findOne(id);
 		ClientEntity client = clientRepository.findOne(clientId);
@@ -83,7 +85,7 @@ public class BankController {
 		bank.setClients(clients);
 		bankRepository.save(bank);
 		return bank;
-	}*/
+	}
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	public BankEntity deleteBank(@PathVariable Integer id){
 		BankEntity bank = bankRepository.findOne(id);

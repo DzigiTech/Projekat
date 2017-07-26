@@ -12,9 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "version"})
 public class AddressEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,6 +26,7 @@ public class AddressEntity {
 	private String country;
 	private Integer version;
 	@OneToMany(mappedBy = "address", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+	@JsonBackReference
 	private List<ClientEntity> clients = new ArrayList<>();
 	@OneToMany(mappedBy = "address", 
 			cascade = CascadeType.REFRESH, 

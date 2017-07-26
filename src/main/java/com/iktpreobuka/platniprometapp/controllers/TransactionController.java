@@ -20,12 +20,11 @@ public class TransactionController {
 	public TransactionRepository transactionRepository;
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public TransactionEntity saveTransaction(@RequestParam Double ammount, 
-		@RequestParam Date date, @RequestParam String state){
+	public TransactionEntity newTransaction(@RequestParam Double ammount){
+		Date date = new Date();
 		TransactionEntity transaction = new TransactionEntity();
 		transaction.setAmmount(ammount);
 		transaction.setDate(date);
-		transaction.setState(state);
 		transactionRepository.save(transaction);
 		return transaction;
 	}

@@ -14,8 +14,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "version"})
 public class ClientEntity {
 	
 	@Id
@@ -28,13 +33,21 @@ public class ClientEntity {
 	private Integer version;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "address")
+	@JsonManagedReference
 	private AddressEntity address;
 	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinTable(name = "banks")
+	@JoinTable(name = "bankclients")
 	private List<BankEntity> banks;
 	@OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH, 
 			fetch = FetchType.LAZY)
+	@JsonBackReference
 	private List<AccountEntity> clientaccounts;
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.REFRESH, 
+			fetch = FetchType.LAZY)
+	private List<TransactionEntity> sender;
+	@OneToMany(mappedBy = "recipient", cascade = CascadeType.REFRESH, 
+			fetch = FetchType.LAZY)
+	private List<TransactionEntity> recipient;
 	
 	public ClientEntity() {
 		super();
@@ -81,6 +94,33 @@ public class ClientEntity {
 	public void setAddress(AddressEntity address) {
 		this.address = address;
 	}
+	public List<AccountEntity> getClientaccounts() {
+		return clientaccounts;
+	}
+	public void setClientaccounts(List<AccountEntity> clientaccounts) {
+		this.clientaccounts = clientaccounts;
+	}
+	public List<BankEntity> getBanks() {
+		return banks;
+	}
+	public void setBanks(List<BankEntity> banks) {
+		this.banks = banks;
+	}
+	public List<TransactionEntity> getSender() {
+		return sender;
+	}
+	public void setSender(List<TransactionEntity> sender) {
+		this.sender = sender;
+	}
+	public List<TransactionEntity> getRecipient() {
+		return recipient;
+	}
+	public void setRecipient(List<TransactionEntity> recipient) {
+		this.recipient = recipient;
+	}
+	
+
+	
 	
 
 	

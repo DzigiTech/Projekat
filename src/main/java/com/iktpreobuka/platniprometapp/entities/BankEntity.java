@@ -13,11 +13,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 
 
 @Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "version"})
 public class BankEntity {
 	@Id
 	@GeneratedValue
@@ -31,7 +33,7 @@ public class BankEntity {
 	private AddressEntity address;
 	@ManyToMany (cascade = CascadeType.REFRESH, fetch = 
 			FetchType.LAZY)
-	@JoinTable(name = "clients")
+	@JoinTable(name = "bankclients")
 	private List<ClientEntity> clients;
 	
 	
