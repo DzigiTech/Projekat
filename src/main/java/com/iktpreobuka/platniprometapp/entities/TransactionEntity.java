@@ -10,25 +10,34 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 @Entity
 public class TransactionEntity {
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
+	@JsonProperty("Ammount")
 	private Double ammount;
+	@JsonProperty("Date")
 	private Date date = new Date();
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "sender")
+	@JsonManagedReference
 	private ClientEntity sender;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "recipient")
+	@JsonManagedReference
 	private ClientEntity recipient;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "asender")
-	private AccountEntity asender;
+	@JoinColumn(name = "sender_account")
+	private AccountEntity sender_account;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "arecipient")
-	private AccountEntity arecipient;
+	@JoinColumn(name = "recipient_account")
+	private AccountEntity recipient_account;
 	
 	public TransactionEntity() {
 		super();
@@ -53,7 +62,9 @@ public class TransactionEntity {
 	public Date getDate() {
 		return date;
 	}
-
+	@JsonFormat(
+	shape = JsonFormat.Shape.STRING,
+	pattern = "dd-MM-yyyy hh:mm:ss")
 	public void setDate(Date date) {
 		this.date = date;
 	}
@@ -74,21 +85,22 @@ public class TransactionEntity {
 		this.recipient = recipient;
 	}
 
-	public AccountEntity getAsender() {
-		return asender;
+	public AccountEntity getSender_account() {
+		return sender_account;
 	}
 
-	public void setAsender(AccountEntity asender) {
-		this.asender = asender;
+	public void setSender_account(AccountEntity sender_account) {
+		this.sender_account = sender_account;
 	}
 
-	public AccountEntity getArecipient() {
-		return arecipient;
+	public AccountEntity getRecipient_account() {
+		return recipient_account;
 	}
 
-	public void setArecipient(AccountEntity arecipient) {
-		this.arecipient = arecipient;
+	public void setRecipient_account(AccountEntity recipient_account) {
+		this.recipient_account = recipient_account;
 	}
+
 	
 	
 	

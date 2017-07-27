@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -20,9 +21,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 public class AddressEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonProperty("Id")
 	private Integer id;
+	@JsonProperty("Street")
 	private String street;
+	@JsonProperty("City")
 	private String city;
+	@JsonProperty("Country")
 	private String country;
 	private Integer version;
 	@OneToMany(mappedBy = "address", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

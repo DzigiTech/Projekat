@@ -1,16 +1,12 @@
 package com.iktpreobuka.platniprometapp.entities;
 
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -31,10 +27,7 @@ public class BankEntity {
 	@JoinColumn(name = "address")
 	@JsonManagedReference
 	private AddressEntity address;
-	@ManyToMany (cascade = CascadeType.REFRESH, fetch = 
-			FetchType.LAZY)
-	@JoinTable(name = "bankclients")
-	private List<ClientEntity> clients;
+	
 	
 	
 	public BankEntity() {
@@ -64,12 +57,7 @@ public class BankEntity {
 	public void setAddress(AddressEntity address) {
 		this.address = address;
 	}
-	public List<ClientEntity> getClients() {
-		return clients;
-	}
-	public void setClients(List<ClientEntity> clients) {
-		this.clients = clients;
-	}
+	
 	
 	
 	
