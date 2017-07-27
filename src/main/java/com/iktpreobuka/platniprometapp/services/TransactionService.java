@@ -41,8 +41,10 @@ public class TransactionService {
 		transaction.setSender_account(sender_account);
 		transaction.setRecipient_account(recipient_account);
 		Double sstate = sender_account.getState();
-		if (sstate < ammount){
-			return transaction;
+		try {
+			if (sstate < ammount){
+				throw new Exception();
+			}} catch (Exception e) {
 		}
 		sender_account.setState(sstate -= ammount);
 		Double rstate = recipient_account.getState();

@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.iktpreobuka.platniprometapp.entities.AccountEntity;
 
 
@@ -27,18 +27,18 @@ public class AccountEntity {
 	private String number;
 	private Double state;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinColumn(name = "client")
-	@JsonManagedReference
-	private ClientEntity client;
+	@JoinColumn(name = "client_accounts")
+	@JsonProperty("client")
+	private ClientEntity client_accounts;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "bank")
 	private BankEntity bank;
-	@OneToMany(mappedBy = "asender", cascade = CascadeType.REFRESH, 
+	@OneToMany(mappedBy = "sender_account", cascade = CascadeType.REFRESH, 
 			fetch = FetchType.LAZY)
-	private List<TransactionEntity> asender;
-	@OneToMany(mappedBy = "arecipient", cascade = CascadeType.REFRESH, 
+	private List<TransactionEntity> sender_account;
+	@OneToMany(mappedBy = "recipient_account", cascade = CascadeType.REFRESH, 
 			fetch = FetchType.LAZY)
-	private List<TransactionEntity> arecipient;
+	private List<TransactionEntity> recipient_account;
 	
 	
 	
@@ -69,18 +69,32 @@ public class AccountEntity {
 	public void setState(Double state) {
 		this.state = state;
 	}
-	public ClientEntity getClient() {
-		return client;
-	}
-	public void setClient(ClientEntity client) {
-		this.client = client;
-	}
 	public BankEntity getBank() {
 		return bank;
 	}
 	public void setBank(BankEntity bank) {
 		this.bank = bank;
 	}
+	public List<TransactionEntity> getSender_account() {
+		return sender_account;
+	}
+	public void setSender_account(List<TransactionEntity> sender_account) {
+		this.sender_account = sender_account;
+	}
+	public List<TransactionEntity> getRecipient_account() {
+		return recipient_account;
+	}
+	public void setRecipient_account(List<TransactionEntity> recipient_account) {
+		this.recipient_account = recipient_account;
+	}
+	public ClientEntity getClient_accounts() {
+		return client_accounts;
+	}
+	public void setClient_accounts(ClientEntity client_accounts) {
+		this.client_accounts = client_accounts;
+	}
+	
+	
 	
 	
 	

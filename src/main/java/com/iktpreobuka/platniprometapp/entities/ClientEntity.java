@@ -9,14 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 @Entity
@@ -25,28 +24,35 @@ public class ClientEntity {
 	
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
+	@JsonProperty("Name")
 	private String name;
+	@JsonProperty("Surname")
 	private String surname;
+	@JsonProperty("Email")
 	private String email;
+	@JsonProperty("Password")
 	private String password;
 	private Integer version;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "address")
 	@JsonManagedReference
+	@JsonProperty("Address")
 	private AddressEntity address;
-	@ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
-	@JoinTable(name = "bankclients")
-	private List<BankEntity> banks;
-	@OneToMany(mappedBy = "client", cascade = CascadeType.REFRESH, 
+	@OneToMany(mappedBy = "client_accounts", cascade = CascadeType.REFRESH, 
 			fetch = FetchType.LAZY)
-	@JsonBackReference
-	private List<AccountEntity> clientaccounts;
+	@JsonProperty("clientaccounts")
+	private List<AccountEntity> client_accounts;
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.REFRESH, 
 			fetch = FetchType.LAZY)
+	@JsonProperty("sender transactions")
+	@JsonBackReference
 	private List<TransactionEntity> sender;
 	@OneToMany(mappedBy = "recipient", cascade = CascadeType.REFRESH, 
 			fetch = FetchType.LAZY)
+	@JsonProperty("recipient transactions")
+	@JsonBackReference
 	private List<TransactionEntity> recipient;
 	
 	public ClientEntity() {
@@ -94,18 +100,6 @@ public class ClientEntity {
 	public void setAddress(AddressEntity address) {
 		this.address = address;
 	}
-	public List<AccountEntity> getClientaccounts() {
-		return clientaccounts;
-	}
-	public void setClientaccounts(List<AccountEntity> clientaccounts) {
-		this.clientaccounts = clientaccounts;
-	}
-	public List<BankEntity> getBanks() {
-		return banks;
-	}
-	public void setBanks(List<BankEntity> banks) {
-		this.banks = banks;
-	}
 	public List<TransactionEntity> getSender() {
 		return sender;
 	}
@@ -117,6 +111,12 @@ public class ClientEntity {
 	}
 	public void setRecipient(List<TransactionEntity> recipient) {
 		this.recipient = recipient;
+	}
+	public List<AccountEntity> getClient_accounts() {
+		return client_accounts;
+	}
+	public void setClient_accounts(List<AccountEntity> client_accounts) {
+		this.client_accounts = client_accounts;
 	}
 	
 
