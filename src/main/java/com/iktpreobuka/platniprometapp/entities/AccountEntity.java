@@ -22,9 +22,13 @@ import com.iktpreobuka.platniprometapp.entities.AccountEntity;
 public class AccountEntity {
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
+	@JsonProperty("Type")
 	private String type;
+	@JsonProperty("Number")
 	private String number;
+	@JsonProperty("State")
 	private Double state;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_accounts")
