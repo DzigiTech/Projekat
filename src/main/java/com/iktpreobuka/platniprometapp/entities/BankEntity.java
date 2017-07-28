@@ -11,6 +11,7 @@ import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 
 
@@ -19,13 +20,17 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 public class BankEntity {
 	@Id
 	@GeneratedValue
+	@JsonProperty("Id")
 	private Integer id;
+	@JsonProperty("Name")
 	private String name;
+	@JsonProperty("Pib")
 	private String pib;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = 
 			FetchType.LAZY)
 	@JoinColumn(name = "address")
 	@JsonManagedReference
+	@JsonProperty("Address")
 	private AddressEntity address;
 	
 	

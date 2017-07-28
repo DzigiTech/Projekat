@@ -43,6 +43,7 @@ public class ClientEntity {
 	@OneToMany(mappedBy = "client_accounts", cascade = CascadeType.REFRESH, 
 			fetch = FetchType.LAZY)
 	@JsonProperty("clientaccounts")
+	@JsonBackReference
 	private List<AccountEntity> client_accounts;
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.REFRESH, 
 			fetch = FetchType.LAZY)
