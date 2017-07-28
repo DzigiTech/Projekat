@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.iktpreobuka.platniprometapp.entities.AccountEntity;
 import com.iktpreobuka.platniprometapp.entities.BankEntity;
+import com.iktpreobuka.platniprometapp.entities.ClientEntity;
 import com.iktpreobuka.platniprometapp.repositories.AccountRepository;
 import com.iktpreobuka.platniprometapp.repositories.BankRepository;
+import com.iktpreobuka.platniprometapp.repositories.ClientRepository;
 
 
 @RestController
@@ -25,6 +27,8 @@ public class AccountController {
 	private AccountRepository accountRepository;
 	@Autowired
 	private BankRepository bankRepository;
+	@Autowired
+	private ClientRepository clientRepository;
 
 	
 	@RequestMapping(method = RequestMethod.POST)
@@ -78,6 +82,14 @@ public class AccountController {
 		AccountEntity account = accountRepository.findOne(id);
 		BankEntity bank = bankRepository.findOne(bankId);
 		account.setBank(bank);
+		accountRepository.save(account);
+		return account;
+	}
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}/client")
+	public AccountEntity assignClientToAccount(@PathVariable Integer id, @RequestParam Integer clientId){
+		AccountEntity account = accountRepository.findOne(id);
+		ClientEntity client = clientRepository.findOne(clientId);
+		account.setClient_accounts(client);
 		accountRepository.save(account);
 		return account;
 	}
